@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "7.1.0"
+  - "6.9.1"
+
+branches:
+  only:
+    - master
+
+before_install:
+  - npm install bower -g
+  - npm install grunt -g
+
+script:
+  - npm install
+  - bower install
+  - grunt test
+
+cache:
+  directories:
+  - bower_components
+  - node_modules
+
+notifications:
+  slack: taxig8:2fQ1h3yErjKhSIxnNhefdSni

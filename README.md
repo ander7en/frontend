@@ -1,4 +1,5 @@
-# frontend-taxi
+# frontend-taxi - [![Build Status](https://travis-ci.com/ander7en/frontend.svg?token=bnWdo5r79feoj1VViMaz&branch=master)](https://travis-ci.com/ander7en/frontend)
+
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
 version 0.15.1.
