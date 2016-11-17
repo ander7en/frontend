@@ -16,7 +16,7 @@
 
     var vm = this;
     // Data
-    vm.types = "['establishment']";
+    vm.distance = undefined; // will be calculated if both A and B locations are known
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
@@ -38,11 +38,13 @@
       vm.destinationPlace = this.getPlace();
       vm.map.setCenter(vm.destinationPlace.geometry.location);
     }
+
     //Called after detecting current location
     function callbackFunc(param) {
       console.log('I know where ' + param + ' are. ' + vm.message);
       console.log('You are at' + vm.map.getCenter());
     }
+
     // Listener on Pickup location change
     function pickupPlaceChanged() {
       vm.pickupPlace = this.getPlace();

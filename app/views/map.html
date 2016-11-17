@@ -1,26 +1,15 @@
 <div ng-controller="MapCtrl as vm">
 
-  Auto Complete Type:
-  <select ng-model="vm.types">
-    <option value="['geocode']">Geodode</option>
-    <option value="['establishment']">Establishment</option>
-    <option value="['address']">Address</option>
-  </select>
-
-  <br/>
-
-  Enter an pickup address: <br/>
+  Enter pickup address: <br/>
   <input places-auto-complete size=80 placeholder="Pickup"
          ng-model="vm.pickupAddress"
          component-restrictions="{country:'ee'}"
-         types="{{types}}"
          on-place-changed="vm.pickupPlaceChanged()"/> <br/>
   <br>
-  Enter an Destination address: <br/>
+  Enter destination address: <br/>
   <input places-auto-complete size=80 placeholder="Destination"
          ng-model="vm.destinationAaddress"
          component-restrictions="{country:'ee'}"
-         types="{{types}}"
          on-place-changed="vm.destinationPlaceChanged()"/> <br/>
   <br>
   <br>
@@ -28,7 +17,7 @@
     Pickup Address = {{vm.pickupPlace.formatted_address}} <br/>
     Pickup Location: {{vm.pickupPlace.geometry.location}}<br/>
   </div>
-  pickup address : {{vm.pickupAddress}}
+  Pickup address : {{vm.pickupAddress}}
   <br>
   <br>
 
@@ -37,19 +26,24 @@
     Destination Location: {{vm.destinationPlace.geometry.location}}<br/>
   </div>
 
+  <div ng-show="vm.distanse">
+    Destination Address = {{vm.distance}} <br/>
+    Destination Location: {{vm.distance}}<br/>
+  </div>
+
 
   <map center='current-position'
-          geo-fallback-center="[40.74, -74.18]"
-          geo-callback="vm.callbackFunc('you')">
+       geo-fallback-center="[40.74, -74.18]"
+       geo-callback="vm.callbackFunc('you')">
 
-    <!-- Static Direction for demonstrating ngMap directive -->
     <directions
-      draggable="true"
+      draggable="false"
       panel="directions-panel"
       travel-mode="DRIVING"
-      origin="Tartu"
-      destination="tallinn">
+      origin="{{vm.pickupPlace.geometry.location}}"
+      destination="{{vm.destinationPlace.geometry.location}}">
     </directions>
+
   </map>
 </div>
 

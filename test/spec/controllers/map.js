@@ -18,7 +18,6 @@ describe('Controller: MapCtrl', function () {
         getMap: function () {
           return {
             then: function (map) {
-              console.log("Hoala")
               return {1:2};
             }
           }
@@ -26,10 +25,6 @@ describe('Controller: MapCtrl', function () {
       }
     });
   }));
-
-  it('should have default type for map: establishment', function () {
-    expect(MapCtrl.types).toBe("['establishment']");
-  });
 
   it('should have pickupPlaceChanged listener', function () {
     expect(MapCtrl.pickupPlaceChanged).toBeDefined()
