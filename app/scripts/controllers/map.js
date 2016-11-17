@@ -16,14 +16,11 @@ angular.module('frontendTaxiApp')
     // Listener on Pickup location change
     vm.pickupPlaceChanged = function () {
       vm.pickupPlace = this.getPlace();
-      console.log('location', vm.pickupPlace.geometry.location);
       vm.map.setCenter(vm.pickupPlace.geometry.location);
-      vm.map.setPosition(vm.pickupPlace);
     };
     // Listener on Destination location change
     vm.destinationPlaceChanged = function () {
       vm.destinationPlace = this.getPlace();
-      console.log('location', vm.destinationPlace.geometry.location);
       vm.map.setCenter(vm.destinationPlace.geometry.location);
     };
 

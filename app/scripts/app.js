@@ -19,7 +19,7 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: ' '
+        controllerAs: 'main'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
