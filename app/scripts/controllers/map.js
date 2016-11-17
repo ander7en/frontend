@@ -16,7 +16,7 @@
 
     var vm = this;
     // Data
-    vm.types = "['establishment']";
+    vm.distance = undefined; // possible to calculate when both A and B locations are entered
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
