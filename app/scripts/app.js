@@ -11,7 +11,8 @@
 angular
   .module('frontendTaxiApp', [
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ngMap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -24,6 +25,11 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
+      })
+      .when('/map', {
+        templateUrl: 'views/map.html',
+        controller: 'MapCtrl',
+        controllerAs: 'map'
       })
       .otherwise({
         redirectTo: '/'

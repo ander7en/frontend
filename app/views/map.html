@@ -1,0 +1,56 @@
+<div ng-controller="MapCtrl as vm">
+
+  Auto Complete Type:
+  <select ng-model="vm.types">
+    <option value="['geocode']">Geodode</option>
+    <option value="['establishment']">Establishment</option>
+    <option value="['address']">Address</option>
+  </select>
+
+  <br/>
+
+  Enter an pickup address: <br/>
+  <input places-auto-complete size=80 placeholder="Pickup"
+         ng-model="vm.pickupAddress"
+         component-restrictions="{country:'ee'}"
+         types="{{types}}"
+         on-place-changed="vm.pickupPlaceChanged()"/> <br/>
+  <br>
+  Enter an Destination address: <br/>
+  <input places-auto-complete size=80 placeholder="Destination"
+         ng-model="vm.destinationAaddress"
+         component-restrictions="{country:'ee'}"
+         types="{{types}}"
+         on-place-changed="vm.destinationPlaceChanged()"/> <br/>
+  <br>
+  <br>
+  <div ng-show="vm.pickupPlace">
+    Pickup Address = {{vm.pickupPlace.formatted_address}} <br/>
+    Pickup Location: {{vm.pickupPlace.geometry.location}}<br/>
+  </div>
+  pickup address : {{vm.pickupAddress}}
+  <br>
+  <br>
+
+  <div ng-show="vm.destinationPlace">
+    Destination Address = {{vm.destinationPlace.formatted_address}} <br/>
+    Destination Location: {{vm.destinationPlace.geometry.location}}<br/>
+  </div>
+
+
+  <map center='current-position'
+          geo-fallback-center="[40.74, -74.18]"
+          geo-callback="vm.callbackFunc('you')">
+
+    <!-- Static Direction for demonstrating ngMap directive -->
+    <directions
+      draggable="true"
+      panel="directions-panel"
+      travel-mode="DRIVING"
+      origin="Tartu"
+      destination="tallinn">
+    </directions>
+  </map>
+</div>
+
+
