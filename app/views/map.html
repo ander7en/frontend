@@ -1,4 +1,6 @@
 <div ng-controller="MapCtrl as vm">
+  qqq{{vm.map.mapTypeId}}
+
   Auto Complete Type:
   <select ng-model="vm.types">
     <option value="['geocode']">Geodode</option>
@@ -27,6 +29,7 @@
     Pickup Address = {{vm.pickupPlace.formatted_address}} <br/>
     Pickup Location: {{vm.pickupPlace.geometry.location}}<br/>
   </div>
+  pickup address : {{vm.pickupAddress}}
   <br>
   <br>
 
