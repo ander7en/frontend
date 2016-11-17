@@ -27,10 +27,6 @@ describe('Controller: MapCtrl', function () {
     });
   }));
 
-  it('should have default type for map: establishment', function () {
-    expect(MapCtrl.types).toBe("['establishment']");
-  });
-
   it('should have pickupPlaceChanged listener', function () {
     expect(MapCtrl.pickupPlaceChanged).toBeDefined()
   });
