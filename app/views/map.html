@@ -1,5 +1,4 @@
 <div ng-controller="MapCtrl as vm">
-  qqq{{vm.map.mapTypeId}}
 
   Auto Complete Type:
   <select ng-model="vm.types">
@@ -43,15 +42,14 @@
           geo-fallback-center="[40.74, -74.18]"
           geo-callback="vm.callbackFunc('you')">
 
-    <!--<marker position=“{{vm.destinationPlace.geometry.location}}” />-->
-
-    <!--<directions-->
-      <!--draggable="true"-->
-      <!--panel="directions-panel"-->
-      <!--travel-mode="DRIVING"-->
-      <!--origin="Tartu"-->
-      <!--destination="tallinn">-->
-    <!--</directions>-->
+    <!-- Static Direction for demonstrating ngMap directive -->
+    <directions
+      draggable="true"
+      panel="directions-panel"
+      travel-mode="DRIVING"
+      origin="Tartu"
+      destination="tallinn">
+    </directions>
   </map>
 </div>
 
