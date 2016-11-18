@@ -15,8 +15,9 @@
   function MapCtrl(NgMap) {
 
     var vm = this;
+    var directionsService = new google.maps.DirectionsService();
     // Data
-    vm.distance = undefined; // possible to calculate when both A and B locations are entered
+    //vm.distance = undefined; // possible to calculate when both A and B locations are entered
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
@@ -37,17 +38,23 @@
     function destinationPlaceChanged() {
       vm.destinationPlace = this.getPlace();
       vm.map.setCenter(vm.destinationPlace.geometry.location);
+
     }
     //Called after detecting current location
     function callbackFunc(param) {
       console.log('I know where ' + param + ' are. ' + vm.message);
       console.log('You are at' + vm.map.getCenter());
+
     }
     // Listener on Pickup location change
     function pickupPlaceChanged() {
       vm.pickupPlace = this.getPlace();
       vm.map.setCenter(vm.pickupPlace.geometry.location);
+
     }
   }
+
+
+
 
 })();

@@ -3,14 +3,14 @@
   <br/>
 
   Enter pickup address: <br/>
-  <input places-auto-complete size=80 placeholder="Pickup"
+  <input id="Pickups" places-auto-complete size=80 placeholder="Pickup"
          ng-model="vm.pickupAddress"
          component-restrictions="{country:'ee'}"
          on-place-changed="vm.pickupPlaceChanged()"/> <br/>
   <br>
   Enter destination address: <br/>
-  <input places-auto-complete size=80 placeholder="Destination"
-         ng-model="vm.destinationAaddress"
+  <input id="Destinations" places-auto-complete size=80 placeholder="Destination"
+         ng-model="vm.destinationAddress"
          component-restrictions="{country:'ee'}"
          on-place-changed="vm.destinationPlaceChanged()"/> <br/>
   <br>
@@ -19,19 +19,21 @@
     Pickup Address = {{vm.pickupPlace.formatted_address}} <br/>
     Pickup Location: {{vm.pickupPlace.geometry.location}}<br/>
   </div>
-  pickup address : {{vm.pickupAddress}}
-  <br>
-  <br>
 
+  <br>
+  <br>
   <div ng-show="vm.destinationPlace">
     Destination Address = {{vm.destinationPlace.formatted_address}} <br/>
     Destination Location: {{vm.destinationPlace.geometry.location}}<br/>
   </div>
 
-
-  <div ng-show="vm.distance">
-    Distance = {{vm.distance}} <br/>
+  <br>
+  <br>
+  <div ng-show="vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance">
+    Distance: {{vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text}}<br>
+    Average time of travel: {{vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text}}<br>
   </div>
+
 
   <map center='current-position'
           geo-fallback-center="[40.74, -74.18]"
@@ -39,13 +41,15 @@
 
     <!-- Static Direction for demonstrating ngMap directive -->
     <directions
-      draggable="true"
+      draggable="false"
       panel="directions-panel"
       travel-mode="DRIVING"
-      origin="Tartu"
-      destination="tallinn">
+      origin={{vm.pickupPlace.geometry.location}}
+      destination={{vm.destinationPlace.geometry.location}}>
     </directions>
   </map>
+
+
 </div>
 
 
