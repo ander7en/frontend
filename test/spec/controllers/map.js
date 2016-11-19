@@ -18,8 +18,7 @@ describe('Controller: MapCtrl', function () {
         getMap: function () {
           return {
             then: function (map) {
-              console.log("Hoala")
-              return {1:2};
+              return map;
             }
           }
         }

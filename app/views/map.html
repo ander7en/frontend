@@ -15,23 +15,24 @@
          on-place-changed="vm.destinationPlaceChanged()"/> <br/>
   <br>
   <br>
-  <div ng-show="vm.pickupPlace">
-    Pickup Address = {{vm.pickupPlace.formatted_address}} <br/>
-    Pickup Location: {{vm.pickupPlace.geometry.location}}<br/>
+  <div ng-show="vm.pickupLocation">
+    Pickup Location: {{vm.pickupLocation}}
   </div>
 
   <br>
   <br>
-  <div ng-show="vm.destinationPlace">
-    Destination Address = {{vm.destinationPlace.formatted_address}} <br/>
-    Destination Location: {{vm.destinationPlace.geometry.location}}<br/>
+  <div ng-show="vm.destinationLocation">
+    Destination Location: {{vm.destinationLocation}}
   </div>
 
   <br>
-  <br>
-  <div ng-show="vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance">
-    Distance: {{vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text}}<br>
-    Average time of travel: {{vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text}}<br>
+
+  <div ng-show="vm.distance">
+    Distance:{{vm.distance}}
+  </div>
+
+  <div ng-show="vm.duration">
+    Average time of travel::{{vm.duration}}
   </div>
 
 
@@ -44,9 +45,10 @@
       draggable="false"
       panel="directions-panel"
       travel-mode="DRIVING"
-      origin={{vm.pickupPlace.geometry.location}}
-      destination={{vm.destinationPlace.geometry.location}}>
+      origin="{{vm.pickupLocation}}"
+      destination="{{vm.destinationLocation}}">
     </directions>
+
   </map>
 
 
