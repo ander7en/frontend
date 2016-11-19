@@ -17,13 +17,15 @@
     var vm = this;
     // Data
     vm.distance = undefined;
+    vm.duration = undefined;
     vm.pickupLocation = undefined;
     vm.destinationLocation = undefined;
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
-    vm.callbackFunc = callbackFunc;
+    vm.onCurrentLocationDetected = onCurrentLocationDetected;
     vm.pickupPlaceChanged = pickupPlaceChanged;
+    vm.updateRouteInfo = updateRouteInfo;
     //////////
 
 
@@ -35,8 +37,7 @@
       });
     }
 
-    // Listener on Destination location change
-    function update_route_info() {
+    function updateRouteInfo() {
       if (vm.pickupLocation && vm.destinationLocation) {
         $timeout(function() {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
@@ -45,14 +46,15 @@
       }
     }
 
+    // Listener on Destination location change
     function destinationPlaceChanged() {
       vm.destinationLocation = this.getPlace().geometry.location;
       vm.map.setCenter(vm.destinationLocation);
-      update_route_info();
+      updateRouteInfo();
     }
 
     //Called after detecting current location
-    function callbackFunc(param) {
+    function onCurrentLocationDetected(param) {
       console.log('I know where ' + param + ' are. ' + vm.message);
       console.log('You are at' + vm.map.getCenter());
     }
@@ -61,7 +63,7 @@
     function pickupPlaceChanged() {
       vm.pickupLocation = this.getPlace().geometry.location;
       vm.map.setCenter(vm.pickupLocation);
-      update_route_info();
+      updateRouteInfo();
     }
   }
 

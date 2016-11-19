@@ -6,11 +6,13 @@ describe('Controller: MapCtrl', function () {
   beforeEach(module('frontendTaxiApp'));
 
   var MapCtrl,
-    scope;
+    scope,
+    timeout;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $timeout) {
     scope = $rootScope.$new();
+    timeout = $timeout;
     MapCtrl = $controller('MapCtrl', {
       $scope: scope,
       // place here mocked dependencies
@@ -21,7 +23,28 @@ describe('Controller: MapCtrl', function () {
               return map;
             }
           }
+        },
+        getPlace: function(){
+          return {geometry: {location: 11}}
         }
+      },
+      map: {
+        directionsRenderers: [
+          {
+            directions: {
+              routes: [
+                {
+                  legs: [
+                    {
+                      distance: {text: "10"},
+                      duration: {text: "12"}
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
       }
     });
   }));
@@ -34,20 +57,12 @@ describe('Controller: MapCtrl', function () {
     expect(MapCtrl.destinationPlaceChanged).toBeDefined()
   });
 
-  it('should have current location callbackFunc defined', function () {
-    expect(MapCtrl.destinationPlaceChanged).toBeDefined()
+  it('should have current location onCurrentLocationDetected defined', function () {
+    expect(MapCtrl.onCurrentLocationDetected).toBeDefined()
   });
 
-  it('should call init', function () {
-    // expect(MapCtrl.init).toHaveBeenCalled();
-    //  TODO cannot test this
+  it('should have updateRouteInfo defined', function () {
+    expect(MapCtrl.updateRouteInfo).toBeDefined()
   });
-
-  it('should have map initialized', function () {
-    // expect(MapCtrl.map).toBeDefined()
-    // cannot determine why this is not defined and how to test it
-    //  TODO
-  });
-
 
 });
