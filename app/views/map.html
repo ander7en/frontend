@@ -14,6 +14,8 @@
          component-restrictions="{country:'ee'}"
          on-place-changed="vm.destinationPlaceChanged()"/> <br/>
   <br>
+  <input type="submit" id="submit" ng-click="vm.submit()" value="Submit" />
+  <br>
   <br>
   <div ng-show="vm.pickupLocation">
     Pickup Location: {{vm.pickupLocation}}

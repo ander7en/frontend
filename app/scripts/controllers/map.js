@@ -12,7 +12,7 @@
     .controller('MapCtrl', MapCtrl);
 
   /* @ngInject */
-  function MapCtrl(NgMap, $timeout) {
+  function MapCtrl(NgMap, $timeout, $window, BookingService) {
 
     var vm = this;
     // Data
@@ -26,6 +26,7 @@
     vm.onCurrentLocationDetected = onCurrentLocationDetected;
     vm.pickupPlaceChanged = pickupPlaceChanged;
     vm.updateRouteInfo = updateRouteInfo;
+    vm.submit = submit;
     //////////
 
 
@@ -64,6 +65,18 @@
       vm.pickupLocation = this.getPlace().geometry.location;
       vm.map.setCenter(vm.pickupLocation);
       updateRouteInfo();
+    }
+
+    function submit() {
+      BookingService.book(vm.pickupLocation, vm.destinationLocation)
+        .then(function (response){
+          // success callback
+          console.log(response)
+          return response
+        }, function(response){
+          //error callback
+          console.log('Error: ', response)
+        })
     }
   }
 
