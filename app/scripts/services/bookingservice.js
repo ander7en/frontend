@@ -42,8 +42,8 @@ angular.module('frontendTaxiApp')
       });
       var channel = pusher.subscribe(userId + '_channel');
       channel.bind('update', function(data) {
-        console.log('Personal update: ' + data.message);
-        console.log(userId == data.userId)
+        console.log('You will be picked up by car with info: ' + data.carInfo);
+        console.log('Car will arrive in ' + data.arrivalTime);
       });
     }
 
