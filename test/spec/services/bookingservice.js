@@ -9,15 +9,16 @@ describe('Service: BookingService', function () {
   var testSrcLocation = {latitude: 45.123123, longitude: 123.456}
   var testTgtLocation = {latitude: 45.123123, longitude: 123.456}
   // instantiate service
-  var $httpBackend, $controller, $rootScope,  createController;
+  var $httpBackend, $controller, $rootScope, createController, bookingService;
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function (_BookingService_,$injector) {
     $httpBackend = $injector.get('$httpBackend');
-    $rootScope = $injector.get('$rootScope')
-    $controller = $injector.get('$controller')
+    $rootScope = $injector.get('$rootScope');
+    $controller = $injector.get('$controller');
     createController = function () {
       return $controller('MapCtrl', {'$scope': $rootScope});
     }
+    bookingService = _BookingService_;
   }));
 
   afterEach(function() {
@@ -32,6 +33,14 @@ describe('Service: BookingService', function () {
     controller.submit()
     $httpBackend.expectPOST(remoteAdress).respond(201, '')
     $httpBackend.flush()
+  })
+
+  it('should generate different uuid every time', function () {
+    for (var i = 0; i < 20; i++) {
+      var first_uuid = bookingService.uuid();
+      var second_uuid = bookingService.uuid();
+      expect(first_uuid).not.toEqual(second_uuid);
+    }
   })
 
   // can be used when backend will return something meaningful
