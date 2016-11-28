@@ -9,7 +9,8 @@
    * Controller of the frontendTaxiApp
    */
   angular.module('frontendTaxiApp')
-    .controller('MapCtrl', MapCtrl);
+    .controller('MapCtrl', MapCtrl)
+    .service('NavigatorGeolocation', NavigatorGeolocation);
 
   /* @ngInject */
   function MapCtrl(NgMap, $timeout) {
@@ -34,7 +35,31 @@
     function init() {
       NgMap.getMap().then(function (map) {
         vm.map = map;
+
+        navigator.geolocation.getCurrentPosition(success);
+
+        function success (pos) {
+          vm.lat = vm.map.getCenter().lat();
+          vm.lng = vm.map.getCenter().lng();
+
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(vm.lat, vm.lng);
+          geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                document.getElementById('Pickups').value = results[0].formatted_address
+                vm.pickupLocation = latlng;
+                pickupPlaceChanged();
+              } else {
+                element.text('Location not found');
+              }
+            } else {
+              element.text('Geocoder failed due to: ' + status);
+            }
+          });
+        }
       });
+
     }
 
     function updateRouteInfo() {
@@ -57,6 +82,8 @@
     function onCurrentLocationDetected(param) {
       console.log('I know where ' + param + ' are. ' + vm.message);
       console.log('You are at' + vm.map.getCenter());
+
+
     }
 
     // Listener on Pickup location change

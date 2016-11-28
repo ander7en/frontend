@@ -28,19 +28,19 @@
   <br>
 
   <div ng-show="vm.distance">
-    Distance:{{vm.distance}}
+    Distance: {{vm.distance}}
   </div>
 
   <div ng-show="vm.duration">
-    Average time of travel::{{vm.duration}}
+    Average time of travel: {{vm.duration}}
   </div>
 
 
   <map center='current-position'
-          geo-fallback-center="[40.74, -74.18]"
-          geo-callback="vm.onCurrentLocationDetected('you')">
+          geo-fallback-center="[58.53, 25.33]"
+          geo-callback="vm.callbackFunc('you')"
+          >
 
-    <!-- Static Direction for demonstrating ngMap directive -->
     <directions
       draggable="false"
       panel="directions-panel"
