@@ -31,6 +31,40 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    //config
+
+    ngconstant: {
+      // Options for all targets
+      options: {
+        space: '  ',
+        wrap: '"use strict";\n\n {\%= __ngModule %}',
+        name: 'config',
+      },
+      // Environment targets
+      development: {
+        options: {
+          dest: '<%= yeoman.app %>/scripts/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'development',
+            apiEndpoint: 'http://localhost:3000'
+          }
+        }
+      },
+      production: {
+        options: {
+          dest: '<%= yeoman.dist %>/scripts/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'production',
+            apiEndpoint: 'https://taxi-backend.herokuapp.com/'
+          }
+        }
+      }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -220,7 +254,7 @@ module.exports = function (grunt) {
             }
           }
       }
-    }, 
+    },
 
     // Renames files for browser caching purposes
     filerev: {
@@ -426,6 +460,10 @@ module.exports = function (grunt) {
     }
   });
 
+  //LOAD plugins
+
+  grunt.loadNpmTasks('grunt-ng-constant');
+
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -434,6 +472,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'ngconstant:development',
       'wiredep',
       'concurrent:server',
       'postcss:server',
@@ -458,6 +497,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:production',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

@@ -6,3 +6,4 @@
 /.idea
 coverage
 npm-debug.log
+app/scripts/config.js

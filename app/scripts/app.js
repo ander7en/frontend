@@ -12,7 +12,8 @@ angular
   .module('frontendTaxiApp', [
     'ngResource',
     'ngRoute',
-    'ngMap'
+    'ngMap',
+    'config'
   ])
   .config(function ($routeProvider) {
     $routeProvider
