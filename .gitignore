@@ -5,3 +5,4 @@
 /bower_components
 /.idea
 coverage
+npm-debug.log

@@ -1,25 +1,29 @@
 language: node_js
 node_js:
-  - "7.1.0"
-  - "6.9.1"
-
+- 7.1.0
+- 6.9.1
 branches:
   only:
-    - master
-
+  - production
+  - master
 before_install:
-  - npm install bower -g
-  - npm install grunt -g
-
+- npm install bower -g
+- npm install grunt -g
 script:
-  - npm install
-  - bower install
-  - grunt test
-
+- npm install
+- bower install
+- grunt test
 cache:
   directories:
   - bower_components
   - node_modules
-
 notifications:
   slack: taxig8:2fQ1h3yErjKhSIxnNhefdSni
+deploy:
+  provider: heroku
+  api_key:
+    secure: UgJsO86m4u2H6D0tX5FDfSe3MUlQ+mZ+E7DnH7iRVxR/nPDgVTGoP7PgB3645CXyxYn8d7CdkPpebP7TeLFNHRoki8O4cXm0L6Aq7Lr80PKrIN4vzYrns+hdyDh+J0ap/tPEPDCQVKNqeNOnCI+feO/vm/1bJegjLpKzzcQhYkK0wkdTyeKgFknbHuM3wXup8k3JG8+/dEu6EKk6SxvNGZNwpUM5AgJNBsJb8DCkD2mvy4l3+H/L7EZyIsCBiwC2JzWQURA78s+ZCl52h53d/a7KV4i9HLvdHoPAfbqjJ+Nj6A0U6pV0oXa+SxPXLa1qJ2kS94QUxWNNqHEhhSPJPE00PEyH8CL/rDmiWymQosGQt/gl6m3omvKSErjyoyqsOECJPtqoEb26Yr0APkf1pLwuwi4zSx71fgpRu/5H9YpAP5unqBRjxXrythz04m7cqqwYjz6mko8p4Hi0QEmS7zkNV22LIz2B24QGag75w04Ttbj5WK3MbLd7PFbq2HmV5gd0y3V+Lhx9CbeHoqD3xrmezjOIvDeW32mumHTM2RiXRvbH9zBHz6fKjirRFjYU2lg6nmuhfcLQh4xwESVVpvgQFrTiUpDHUftQ9XEDDfn4d0cPb4uXxk1HxcxlMXIzSR930Yi2ir8bS7gsLPnW+4veonxnogZ5kKP56zayE90=
+  app: taxi-angular-frontend
+  on:
+    branch: production
+    node: 6.9.1
