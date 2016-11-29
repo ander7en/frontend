@@ -8,7 +8,7 @@ describe('Unit: Map', function () {
   beforeEach(inject(function ($controller) {
 
     // Instantiate the controller with an object of the dependencies
-    ctrl = $controller('MapCtrl', {
+    ctrl = $controller('OrderCtrl', {
       NgMap: {
         getMap: function () {
           return {
@@ -31,7 +31,7 @@ describe('Unit: Map', function () {
     };
   }));
 
-  describe('MapCtrl', function () {
+  describe('OrderCtrl', function () {
     // Test some basic expectations about the controller
 
     it('should have pickupPlaceChanged defined', function () {

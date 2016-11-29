@@ -3,16 +3,16 @@
 
   /**
    * @ngdoc function
-   * @name frontendTaxiApp.controller:MapCtrl
+   * @name frontendTaxiApp.controller:OrderCtrl
    * @description
-   * # MapCtrl
+   * # OrderCtrl
    * Controller of the frontendTaxiApp
    */
   angular.module('frontendTaxiApp')
-    .controller('MapCtrl', MapCtrl);
+    .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function MapCtrl(NgMap, $timeout, $window, BookingService) {
+  function OrderCtrl(NgMap, $timeout, $window, BookingService) {
 
     var vm = this;
     // Data

@@ -16,7 +16,7 @@ describe('Service: BookingService', function () {
     $rootScope = $injector.get('$rootScope');
     $controller = $injector.get('$controller');
     createController = function () {
-      return $controller('MapCtrl', {'$scope': $rootScope});
+      return $controller('OrderCtrl', {'$scope': $rootScope});
     }
     bookingService = _BookingService_;
   }));
