@@ -52,6 +52,17 @@ module.exports = function (grunt) {
           }
         }
       },
+      test: {
+        options: {
+          dest: '<%= yeoman.dist %>/scripts/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'test',
+            apiEndpoint: 'http://localhost:3000'
+          }
+        }
+      },
       production: {
         options: {
           dest: '<%= yeoman.dist %>/scripts/config.js'
@@ -59,7 +70,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'https://taxi-backend.herokuapp.com/'
+            apiEndpoint: 'https://taxi-backend.herokuapp.com'
           }
         }
       }
@@ -488,6 +499,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'ngconstant:test',
     'wiredep',
     'concurrent:test',
     'postcss',
