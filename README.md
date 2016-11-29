@@ -15,3 +15,13 @@ Run `grunt` for building and `grunt serve` for preview.
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+
+## Deployment
+
+Pushing changes on `production` branch will 
+* trigger travis build 
+* if build is successful automatic deployment on heroku is triggered 
+
+
+Address: https://taxi-angular-frontend.herokuapp.com/
