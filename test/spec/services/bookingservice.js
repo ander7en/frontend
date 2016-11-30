@@ -34,7 +34,7 @@ describe('Service: BookingService', function () {
     controller.submit();
     $httpBackend.expectPOST(remoteAddress).respond(201, '');
     $httpBackend.flush()
-  })
+  });
 
   it('should generate different uuid every time', function () {
     for (var i = 0; i < 20; i++) {
@@ -42,7 +42,7 @@ describe('Service: BookingService', function () {
       var second_uuid = bookingService.uuid();
       expect(first_uuid).not.toEqual(second_uuid);
     }
-  })
+  });
 
   // can be used when backend will return something meaningful
   // it('should respond with waiting message', function () {

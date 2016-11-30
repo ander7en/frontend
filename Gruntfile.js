@@ -48,6 +48,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
+            debug: true,
             apiEndpoint: 'http://localhost:3000'
           }
         }
@@ -59,6 +60,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'test',
+            debug: true,
             apiEndpoint: 'http://localhost:3000'
           }
         }
@@ -70,6 +72,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
+            debug: false,
             apiEndpoint: 'https://taxi-backend.herokuapp.com'
           }
         }
