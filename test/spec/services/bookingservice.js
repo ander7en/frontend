@@ -4,20 +4,21 @@ describe('Service: BookingService', function () {
   // load the service's module
   beforeEach(module('frontendTaxiApp'));
 
-  var remoteAdress = 'http://localhost:3000/booking'
-  var responseMessage = 'Some useful actions suppose to happen in here'
+  var remoteAddress;
+  var responseMessage = 'Some useful actions suppose to happen in here';
   var testSrcLocation = {latitude: 45.123123, longitude: 123.456}
   var testTgtLocation = {latitude: 45.123123, longitude: 123.456}
   // instantiate service
   var $httpBackend, $controller, $rootScope, createController, bookingService;
 
-  beforeEach(inject(function (_BookingService_,$injector) {
+  beforeEach(inject(function (_BookingService_,$injector, _ENV_) {
+    remoteAddress = _ENV_.apiEndpoint + "/booking";
     $httpBackend = $injector.get('$httpBackend');
     $rootScope = $injector.get('$rootScope');
     $controller = $injector.get('$controller');
     createController = function () {
       return $controller('OrderCtrl', {'$scope': $rootScope});
-    }
+    };
     bookingService = _BookingService_;
   }));
 
@@ -27,11 +28,11 @@ describe('Service: BookingService', function () {
   });
 
   it('should send post request on submission', function () {
-    var controller = createController()
-    controller.pickupLocation = testSrcLocation
-    controller.destinationLocation = testTgtLocation
-    controller.submit()
-    $httpBackend.expectPOST(remoteAdress).respond(201, '')
+    var controller = createController();
+    controller.pickupLocation = testSrcLocation;
+    controller.destinationLocation = testTgtLocation;
+    controller.submit();
+    $httpBackend.expectPOST(remoteAddress).respond(201, '');
     $httpBackend.flush()
   })
 
@@ -45,7 +46,7 @@ describe('Service: BookingService', function () {
 
   // can be used when backend will return something meaningful
   // it('should respond with waiting message', function () {
-  //   $httpBackend.when('POST', remoteAdress).respond(201, {message: responseMessage})
+  //   $httpBackend.when('POST', remoteAddress).respond(201, {message: responseMessage})
   //   var controller = createController()
   //   controller.pickupLocation = testSrcLocation
   //   controller.destinationLocation = testTgtLocation
