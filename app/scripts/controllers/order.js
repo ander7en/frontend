@@ -12,14 +12,16 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl(NgMap, $timeout, $window, BookingService) {
+  function OrderCtrl(NgMap, $timeout, PusherFactory, BookingService, ENV) {
 
     var vm = this;
+    var pusherUserId;
     // Data
     vm.distance = undefined;
     vm.duration = undefined;
     vm.pickupLocation = undefined;
     vm.destinationLocation = undefined;
+    vm.arrivalTime = undefined;
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
@@ -30,12 +32,36 @@
     //////////
 
 
+
+
     init();
 
     function init() {
       NgMap.getMap().then(function (map) {
         vm.map = map;
       });
+
+      // for development purpose, should be shut down in production
+      PusherFactory.logToConsole = ENV.debug;
+
+
+      pusherUserId = BookingService.uuid();
+      var pusher = new PusherFactory('cad5312b266942c7cf7d', {
+        cluster: 'eu',
+        encrypted: true
+      });
+      var channel = pusher.subscribe(pusherUserId + '_channel');
+      channel.bind('update', function(data) {
+        console.log('You will be picked up by car with info: ' + data.carInfo);
+        console.log('Car will arrive in ' + data.arrivalTime);
+
+        $timeout(function() {
+          vm.arrivalTime = data.arrivalTime;
+          vm.carInfo = data.carInfo;
+        }, 200);
+
+      });
+
     }
 
     function updateRouteInfo() {
@@ -68,10 +94,10 @@
     }
 
     function submit() {
-      BookingService.book(vm.pickupLocation, vm.destinationLocation)
+      BookingService.book(vm.pickupLocation, vm.destinationLocation, pusherUserId)
         .then(function (response){
           // success callback
-          console.log(response)
+          console.log(response);
           return response
         }, function(response){
           //error callback
