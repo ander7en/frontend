@@ -3,30 +3,35 @@
 
   /**
    * @ngdoc function
-   * @name frontendTaxiApp.controller:MapCtrl
+   * @name frontendTaxiApp.controller:OrderCtrl
    * @description
-   * # MapCtrl
+   * # OrderCtrl
    * Controller of the frontendTaxiApp
    */
   angular.module('frontendTaxiApp')
-    .controller('MapCtrl', MapCtrl);
+    .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function MapCtrl(NgMap, $timeout) {
+  function OrderCtrl(NgMap, $timeout, PusherFactory, BookingService, ENV) {
 
     var vm = this;
+    var pusherUserId;
     // Data
     vm.distance = undefined;
     vm.duration = undefined;
     vm.pickupLocation = undefined;
     vm.destinationLocation = undefined;
+    vm.arrivalTime = undefined;
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
     vm.onCurrentLocationDetected = onCurrentLocationDetected;
     vm.pickupPlaceChanged = pickupPlaceChanged;
     vm.updateRouteInfo = updateRouteInfo;
+    vm.submit = submit;
     //////////
+
+
 
 
     init();
@@ -57,6 +62,27 @@
             }
           });
         }
+      });
+
+      // for development purpose, should be shut down in production
+      PusherFactory.logToConsole = ENV.debug;
+
+
+      pusherUserId = BookingService.uuid();
+      var pusher = new PusherFactory('cad5312b266942c7cf7d', {
+        cluster: 'eu',
+        encrypted: true
+      });
+      var channel = pusher.subscribe(pusherUserId + '_channel');
+      channel.bind('update', function(data) {
+        console.log('You will be picked up by car with info: ' + data.carInfo);
+        console.log('Car will arrive in ' + data.arrivalTime);
+
+        $timeout(function() {
+          vm.arrivalTime = data.arrivalTime;
+          vm.carInfo = data.carInfo;
+        }, 200);
+
       });
 
     }
@@ -102,6 +128,18 @@
       vm.pickupLocation = this.getPlace().geometry.location;
       vm.map.setCenter(vm.pickupLocation);
       updateRouteInfo();
+    }
+
+    function submit() {
+      BookingService.book(vm.pickupLocation, vm.destinationLocation, pusherUserId)
+        .then(function (response){
+          // success callback
+          console.log(response);
+          return response
+        }, function(response){
+          //error callback
+          console.log('Error: ', response)
+        })
     }
   }
 
