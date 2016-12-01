@@ -69,17 +69,5 @@ describe('Unit: Map', function () {
       expect(ctrl.destinationLocation).toBe(11);
     });
 
-    it('should get correct distance between Tartu and Tallinn', function () {
-      ctrl.pickupLocation = {"lat":58.3776252,"lng":26.729006300000037};
-      ctrl.pickupPlaceChanged();
-      ctrl.destinationLocation = {"lat":59.43696079999999,"lng":24.75357459999998};
-      ctrl.destinationPlaceChanged();
-      // ctrl.updateRouteInfo();
-
-      //ctrl.distance = ctrl.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
-      expect(ctrl.distance).toEqual("186 km")
-    });
-
-
   });
 });
