@@ -51,7 +51,7 @@
           geocoder.geocode({ 'latLng': latlng }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[0]) {
-                document.getElementById('Pickups').value = results[0].formatted_address
+                document.getElementById('pickupLocation').value = results[0].formatted_address
                 vm.pickupLocation = latlng;
                 pickupPlaceChanged();
               } else {
