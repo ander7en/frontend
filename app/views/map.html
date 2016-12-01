@@ -1,0 +1,57 @@
+<div ng-controller="MapCtrl as vm">
+
+  <br/>
+
+  Enter pickup address: <br/>
+  <input id="Pickups" places-auto-complete size=80 placeholder="Pickup"
+         ng-model="vm.pickupAddress"
+         component-restrictions="{country:'ee'}"
+         on-place-changed="vm.pickupPlaceChanged()"/> <br/>
+  <br>
+  Enter destination address: <br/>
+  <input id="Destinations" places-auto-complete size=80 placeholder="Destination"
+         ng-model="vm.destinationAddress"
+         component-restrictions="{country:'ee'}"
+         on-place-changed="vm.destinationPlaceChanged()"/> <br/>
+  <br>
+  <br>
+  <div ng-show="vm.pickupLocation">
+    Pickup Location: {{vm.pickupLocation}}
+  </div>
+
+  <br>
+  <br>
+  <div ng-show="vm.destinationLocation">
+    Destination Location: {{vm.destinationLocation}}
+  </div>
+
+  <br>
+
+  <div ng-show="vm.distance">
+    Distance: {{vm.distance}}
+  </div>
+
+  <div ng-show="vm.duration">
+    Average time of travel: {{vm.duration}}
+  </div>
+
+
+  <map center='current-position'
+          geo-fallback-center="[58.53, 25.33]"
+          geo-callback="vm.callbackFunc('you')"
+          >
+
+    <directions
+      draggable="false"
+      panel="directions-panel"
+      travel-mode="DRIVING"
+      origin="{{vm.pickupLocation}}"
+      destination="{{vm.destinationLocation}}">
+    </directions>
+
+  </map>
+
+
+</div>
+
+
