@@ -9,8 +9,7 @@
    * Controller of the frontendTaxiApp
    */
   angular.module('frontendTaxiApp')
-    .controller('MapCtrl', MapCtrl)
-    .service('NavigatorGeolocation', NavigatorGeolocation);
+    .controller('MapCtrl', MapCtrl);
 
   /* @ngInject */
   function MapCtrl(NgMap, $timeout) {
@@ -63,11 +62,23 @@
     }
 
     function updateRouteInfo() {
+      function wait(ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+          end = new Date().getTime();
+        }
+      }
+
       if (vm.pickupLocation && vm.destinationLocation) {
         $timeout(function() {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
           vm.duration = vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text;
         }, 200);
+        console.log('before');
+
+        wait(300);  //7 seconds in milliseconds
+        console.log('after');
       }
     }
 
