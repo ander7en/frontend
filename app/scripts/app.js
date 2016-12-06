@@ -13,7 +13,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngMap',
-    'config'
+    'config',
+    'LocalStorageModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider

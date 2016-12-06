@@ -12,7 +12,7 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl(NgMap, $timeout, PusherFactory, BookingService, ENV) {
+  function OrderCtrl(NgMap, $timeout, PusherFactory, BookingService, ENV, localStorageService) {
 
     var vm = this;
     var pusherUserId;
@@ -73,7 +73,8 @@
       channel.bind('update', function(data) {
         console.log('You will be picked up by car with info: ' + data.carInfo);
         console.log('Car will arrive in ' + data.arrivalTime);
-
+        localStorageService.set("arrivalTime", data.arrivalTime);
+        localStorageService.set("carInfo", data.carInfo)
         $timeout(function() {
           vm.arrivalTime = data.arrivalTime;
           vm.carInfo = data.carInfo;
@@ -81,6 +82,11 @@
 
       });
 
+      if (localStorageService.get("arrivalTime") != null)
+      {
+        vm.arrivalTime = localStorageService.get("arrivalTime");
+        vm.carInfo = localStorageService.get("carInfo");
+      }
     }
 
     function updateRouteInfo() {
