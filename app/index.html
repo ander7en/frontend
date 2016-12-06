@@ -46,6 +46,9 @@
           </div>
         </div>
       </div>
+      <div ng-controller="OrderCtrl">
+        <uib-progressbar class="progress-striped active" value="100" type="success" ng-if="bookingProc === true;"><i>Looking for driver...</i></uib-progressbar>
+      </div>
     </div>
 
     <div class="container">
@@ -77,11 +80,14 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
     <script src="bower_components/pusher-websocket-iso/dist/web/pusher.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

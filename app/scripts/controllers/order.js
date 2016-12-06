@@ -12,7 +12,7 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl(NgMap, $timeout, PusherFactory, BookingService, ENV, localStorageService) {
+  function OrderCtrl($rootScope, NgMap, $timeout, PusherFactory, BookingService, ENV, localStorageService) {
 
     var vm = this;
     var pusherUserId;
@@ -23,6 +23,7 @@
     vm.pickupLocation = undefined;
     vm.destinationLocation = undefined;
     vm.arrivalTime = undefined;
+    $rootScope.bookingProc = false;
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
@@ -121,15 +122,18 @@
     }
 
     function submit() {
-      BookingService.book(vm.pickupLocation, vm.destinationLocation, pusherUserId)
+      $rootScope.bookingProc = true;
+      // $scope.$digest();
+      setTimeout(function(){BookingService.book(vm.pickupLocation, vm.destinationLocation, pusherUserId)
         .then(function (response){
           // success callback
+          $rootScope.bookingProc = false;
           console.log(response);
           return response
         }, function(response){
           //error callback
           console.log('Error: ', response)
-        })
+        })}, 5000)
     }
   }
 

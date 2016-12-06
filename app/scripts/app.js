@@ -12,6 +12,7 @@ angular
   .module('frontendTaxiApp', [
     'ngResource',
     'ngRoute',
+    'ui.bootstrap',
     'ngMap',
     'config',
     'LocalStorageModule'
