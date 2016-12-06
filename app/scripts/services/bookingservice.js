@@ -10,15 +10,21 @@
 angular.module('frontendTaxiApp')
   .service('BookingService', BookingService);
 
-function BookingService($http, ENV) {
+function BookingService($http, $rootScope, ENV, localStorageService, PusherFactory, NotificationService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var serviceURL = ENV.apiEndpoint + '/booking';
+    var pusherUserId;
+    var channel;
 
-    this.book = function (srcLocation, tgtLocation, userId) {
-      return $http.post(serviceURL, {srcLocation: srcLocation, tgtLocation: tgtLocation, userId: userId} )
-    }
+    init();
 
-    this.uuid = function () {
+    this.book = function (srcLocation, tgtLocation) {
+      return $http.post(serviceURL, {srcLocation: srcLocation, tgtLocation: tgtLocation, userId: pusherUserId} )
+    };
+
+    this.uuid = uuid;
+
+    function uuid(){
       var lut = [];
 
       for (var i=0; i<256; i++) { lut[i] = (i<16?'0':'')+(i).toString(16); }
@@ -35,6 +41,27 @@ function BookingService($http, ENV) {
       };
 
       return uuid();
+    };
+
+    function init() {
+      PusherFactory.logToConsole = ENV.debug;
+      pusherUserId = uuid();
+      var pusher = new PusherFactory('cad5312b266942c7cf7d', {
+        cluster: 'eu',
+        encrypted: true
+      });
+      channel = pusher.subscribe(pusherUserId + '_channel');
+      channel.bind('update', function(data) {
+        NotificationService.addAlert({type: 'success', msg: 'Car with info: ' + data.carInfo + ' will pick you up in ' + data.arrivalTime});
+        $rootScope.$apply();
+        console.log('You will be picked up by car with info: ' + data.carInfo);
+        console.log('Car will arrive in ' + data.arrivalTime);
+        localStorageService.set("arrivalTime", data.arrivalTime);
+        localStorageService.set("carInfo", data.carInfo);
+      });
     }
 
+    // this.addCallback = function(callback) { channel.bind('update', function(data){
+    //   callback(data);
+    // })};
 }

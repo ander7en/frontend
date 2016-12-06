@@ -42,12 +42,6 @@
   </div>
   <br>
 
-  <div ng-show="vm.arrivalTime">
-    Taxi [ {{vm.carInfo}} ] will pickup you in [ {{vm.arrivalTime}} ]
-  </div>
-
-  <br>
-
   <map center='current-position'
        geo-fallback-center="[40.74, -74.18]"
        geo-callback="vm.onCurrentLocationDetected('you')">

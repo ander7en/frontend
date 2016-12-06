@@ -8,16 +8,8 @@
  * Controller of the frontendTaxiApp
  */
 angular.module('frontendTaxiApp')
-  .controller('NotificationCtrl', function ($scope) {
-    $scope.alerts = [];
+  .controller('NotificationService', function ($scope, NotificationService) {
+    $scope.alerts = NotificationService.alerts;
 
-    this.addAlert = function(alert) {
-      $scope.alerts.push(alert);
-    };
-    $scope.addAlert = this.addAlert;
-
-    this.closeAlert = function(index) {
-      $scope.alerts.splice(index, 1);
-    };
-    $scope.closeAlert = this.closeAlert;
+    $scope.closeAlert = NotificationService.closeAlert;
   });
