@@ -12,7 +12,7 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl($rootScope, NgMap, $timeout, PusherFactory, BookingService, ENV, localStorageService) {
+  function OrderCtrl($rootScope, $scope, NgMap, $timeout, PusherFactory, BookingService, ENV, localStorageService) {
 
     var vm = this;
     var pusherUserId;
@@ -72,10 +72,12 @@
       });
       var channel = pusher.subscribe(pusherUserId + '_channel');
       channel.bind('update', function(data) {
+        $scope.addAlert({type: 'success', msg: 'Car with info: ' + data.carInfo +
+          " will pick you up in " + data.arrivalTime });
         console.log('You will be picked up by car with info: ' + data.carInfo);
         console.log('Car will arrive in ' + data.arrivalTime);
         localStorageService.set("arrivalTime", data.arrivalTime);
-        localStorageService.set("carInfo", data.carInfo)
+        localStorageService.set("carInfo", data.carInfo);
         $timeout(function() {
           vm.arrivalTime = data.arrivalTime;
           vm.carInfo = data.carInfo;

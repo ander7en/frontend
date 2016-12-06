@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="frontendTaxiApp">
+  <body ng-app="frontendTaxiApp" ng-controller="NotificationCtrl">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -49,6 +49,7 @@
       <div ng-controller="OrderCtrl">
         <uib-progressbar class="progress-striped active" value="100" type="success" ng-if="bookingProc === true;"><i>Looking for driver...</i></uib-progressbar>
       </div>
+      <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
     </div>
 
     <div class="container">
@@ -99,6 +100,7 @@
         <script src="scripts/services/pusherfactory.js"></script>
 
         <script src="scripts/config.js" ></script>
+        <script src="scripts/controllers/notification.js"></script>
         <!-- endbuild -->
 </body>
 </html>
