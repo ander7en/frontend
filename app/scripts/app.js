@@ -21,7 +21,6 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/order.html',
-        controller: 'OrderCtrl',
         controllerAs: 'order'
       })
       .when('/about', {

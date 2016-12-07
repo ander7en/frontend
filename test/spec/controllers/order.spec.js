@@ -7,17 +7,20 @@ describe('Unit: Map', function () {
 
   beforeEach(inject(function ($controller) {
 
+    var $scope = {}
+
     // Instantiate the controller with an object of the dependencies
     ctrl = $controller('OrderCtrl', {
-      NgMap: {
-        getMap: function () {
-          return {
-            then: function (map) {
-              return map;
-            }
-          }
-        }
-      }
+      // NgMap: {
+      //   getMap: function () {
+      //     return {
+      //       then: function (map) {
+      //         return map;
+      //       }
+      //     }
+      //   }
+      // },
+      $scope: $scope
     });
 
     ctrl.getPlace = function () {
@@ -40,10 +43,6 @@ describe('Unit: Map', function () {
 
     it('should have destinationPlaceChanged defined', function () {
       expect(ctrl.destinationPlaceChanged).toBeDefined()
-    });
-
-    it('should have current location onCurrentLocationDetected defined', function () {
-      expect(ctrl.onCurrentLocationDetected).toBeDefined()
     });
 
     it('should have updateRouteInfo defined', function () {

@@ -12,13 +12,15 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl($rootScope, NgMap, $timeout, BookingService, localStorageService) {
+  function OrderCtrl($rootScope, $scope, NgMap, $timeout, BookingService, localStorageService, OrderingService) {
 
     var vm = this;
     // Data
+    vm.map = undefined;
     vm.distance = undefined;
     vm.duration = undefined;
     vm.pickupAddress = undefined;
+    vm.destinationAddress = undefined;
     vm.pickupLocation = undefined;
     vm.destinationLocation = undefined;
     vm.arrivalTime = undefined;
@@ -26,47 +28,37 @@
 
     // Methods
     vm.destinationPlaceChanged = destinationPlaceChanged;
-    vm.onCurrentLocationDetected = onCurrentLocationDetected;
     vm.pickupPlaceChanged = pickupPlaceChanged;
     vm.updateRouteInfo = updateRouteInfo;
     vm.submit = submit;
     //////////
-
     init();
 
     function init() {
       NgMap.getMap().then(function (map) {
         vm.map = map;
-
-        NgMap.getGeoLocation().then(function (location) {
-          var geocoder = new google.maps.Geocoder();
-          var latlng = new google.maps.LatLng(location.lat(), location.lng());
-          geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[0]) {
-                document.getElementById('pickupLocation').value = results[0].formatted_address
-                vm.pickupLocation = latlng;
-                pickupPlaceChanged();
-              } else {
-                element.text('Location not found');
-              }
-            } else {
-              element.text('Geocoder failed due to: ' + status);
-            }
+      }).then(function () {
+        if (OrderingService.unfinishedOrderExits) {
+          vm.pickupLocation = OrderingService.unfinishedOrder.origin;
+          locationToPlace(vm.pickupLocation);
+          vm.destinationLocation = OrderingService.unfinishedOrder.destination;
+          locationToPlace(vm.destinationLocation, true);
+        } else {
+          NgMap.getGeoLocation().then(function (location) {
+            locationToPlace(location);
           });
-        });
+        }
       });
-
-      if (localStorageService.get("arrivalTime") != null)
-      {
-        vm.arrivalTime = localStorageService.get("arrivalTime");
-        vm.carInfo = localStorageService.get("carInfo");
-      }
+      // if (localStorageService.get("arrivalTime") != null)
+      // {
+      //   vm.arrivalTime = localStorageService.get("arrivalTime");
+      //   vm.carInfo = localStorageService.get("carInfo");
+      // }
     }
 
     function updateRouteInfo() {
       if (vm.pickupLocation && vm.destinationLocation) {
-        $timeout(function() {
+        $timeout(function () {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
           vm.duration = vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text;
         }, 200);
@@ -76,14 +68,37 @@
     // Listener on Destination location change
     function destinationPlaceChanged() {
       vm.destinationLocation = this.getPlace().geometry.location;
+      OrderingService.changeDestination(vm.destinationLocation);
       vm.map.setCenter(vm.destinationLocation);
       updateRouteInfo();
     }
 
-    //Called after detecting current location
-    function onCurrentLocationDetected(param) {
-      console.log('I know where ' + param + ' are. ' + vm.message);
-      console.log('You are at' + vm.map.getCenter());
+    function locationToPlace(location, forDestinationPlace) {
+      var forDestinationPlace = forDestinationPlace || false;
+      var geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(location.lat(), location.lng());
+      geocoder.geocode({'latLng': latlng}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            // document.getElementById('pickupLocation').value = results[0].formatted_address
+            if (forDestinationPlace) {
+              vm.destinationAddress = results[0].formatted_address;
+              vm.destinationLocation = latlng;
+              $scope.$apply();
+              OrderingService.changeDestination(vm.destinationLocation);
+            } else {
+              vm.pickupAddress = results[0].formatted_address;
+              vm.pickupLocation = latlng;
+              $scope.$apply();
+              OrderingService.changePickup(vm.pickupLocation);
+            }
+          } else {
+            element.text('Location not found');
+          }
+        } else {
+          element.text('Geocoder failed due to: ' + status);
+        }
+      });
     }
 
     // Listener on Pickup location change
@@ -96,16 +111,19 @@
     function submit() {
       $rootScope.bookingProc = true;
       // $scope.$digest();
-      setTimeout(function(){BookingService.book(vm.pickupLocation, vm.destinationLocation)
-        .then(function (response){
+
+      BookingService.book(vm.pickupLocation, vm.destinationLocation)
+        .then(function (response) {
           // success callback
           $rootScope.bookingProc = false;
           console.log(response);
           return response
-        }, function(response){
+        }, function (response) {
           //error callback
           console.log('Error: ', response)
-        })}, 5000)
+        }).then(function () {
+        OrderingService.finishCurrentOrder();
+      })
     }
   }
 
