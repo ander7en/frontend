@@ -8,7 +8,7 @@
  * Controller of the frontendTaxiApp
  */
 angular.module('frontendTaxiApp')
-  .controller('NotificationService', function ($scope, NotificationService) {
+  .controller('NotificationCtrl', function ($scope, NotificationService) {
     $scope.alerts = NotificationService.alerts;
 
     $scope.closeAlert = NotificationService.closeAlert;

@@ -16,7 +16,7 @@
     <!-- endbuild -->
     <base href="/"/>
   </head>
-  <body ng-app="frontendTaxiApp" ng-controller="NotificationService">
+  <body ng-app="frontendTaxiApp" ng-controller="NotificationCtrl">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -39,7 +39,7 @@
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" >
               <li class="active"><a href="/">Order</a></li>
               <li><a ng-href="/about">About</a></li>
             </ul>
@@ -75,7 +75,6 @@
     </script>
 
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyBO5kyw0sfY5g76KK-OGqQHl0EwafK0Hvo&libraries=placeses,visualization,drawing,geometry,places,distance&language=en"></script>
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
