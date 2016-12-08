@@ -12,14 +12,15 @@ angular
   .module('frontendTaxiApp', [
     'ngResource',
     'ngRoute',
+    'ui.bootstrap',
     'ngMap',
-    'config'
+    'config',
+    'LocalStorageModule'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/order.html',
-        controller: 'OrderCtrl',
         controllerAs: 'order'
       })
       .when('/about', {
@@ -30,4 +31,5 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+    $locationProvider.html5Mode(true)
   });

@@ -10,7 +10,6 @@ before_install:
 - npm install grunt -g
 script:
 - npm install
-- bower install
 - grunt test
 cache:
   directories:
