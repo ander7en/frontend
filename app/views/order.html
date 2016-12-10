@@ -54,6 +54,13 @@
       destination="{{vm.destinationLocation}}">
     </directions>
 
+    <marker ng-repeat="driver in vm.drivers"
+            icon="{{vm.image}}"
+            shape="{{vm.shape}}"
+            title="{{driver[0]}}"
+            position="{{driver[1]}}, {{driver[2]}}"
+            z-index="{{driver[3]}}"></marker>
+
   </map>
 
 </div>
