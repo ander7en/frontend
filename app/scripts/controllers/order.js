@@ -12,7 +12,7 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl($rootScope, $scope, NgMap, $timeout, BookingService, localStorageService, OrderingService) {
+  function OrderCtrl($rootScope, $scope, NgMap, $timeout, BookingService, localStorageService, OrderingService, DriverService) {
 
     var vm = this;
     // Data
@@ -46,6 +46,7 @@
         } else {
           NgMap.getGeoLocation().then(function (location) {
             locationToPlace(location);
+            loadDrivers(location);
           });
         }
       });
@@ -54,6 +55,17 @@
       //   vm.arrivalTime = localStorageService.get("arrivalTime");
       //   vm.carInfo = localStorageService.get("carInfo");
       // }
+    }
+
+    function loadDrivers(l) {
+      DriverService.loadDrivers({latitude: l.lat(), longitude: l.lng()})
+        .then(function (response) {
+          // success callback
+          console.log(response);
+        }, function (response) {
+          //error callback
+          console.log('Error: ', response)
+        });
     }
 
     function updateRouteInfo() {
