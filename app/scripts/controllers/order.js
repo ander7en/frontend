@@ -43,7 +43,10 @@
           vm.pickupLocation = OrderingService.unfinishedOrder.origin;
           locationToPlace(vm.pickupLocation);
           vm.destinationLocation = OrderingService.unfinishedOrder.destination;
-          locationToPlace(vm.destinationLocation, true);
+          if (vm.destinationLocation != "noAddress") {
+            locationToPlace(vm.destinationLocation, true);
+          }
+          loadDrivers(vm.pickupLocation);
         } else {
           NgMap.getGeoLocation().then(function (location) {
             locationToPlace(location);
@@ -103,7 +106,7 @@
         $timeout(function () {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
           vm.duration = vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text;
-        }, 200);
+        }, 300);
       }
     }
 
