@@ -150,22 +150,28 @@
       updateRouteInfo();
     }
 
-    function submit() {
-      $rootScope.bookingProc = true;
-      // $scope.$digest();
+    function submit(isValid) {
+      if (isValid) {
 
-      BookingService.book(vm.pickupLocation, vm.destinationLocation)
-        .then(function (response) {
-          // success callback
-          $rootScope.bookingProc = false;
-          console.log(response);
-          return response
-        }, function (response) {
-          //error callback
-          console.log('Error: ', response)
-        }).then(function () {
-        OrderingService.finishCurrentOrder();
-      })
+        $rootScope.bookingProc = true;
+        // $scope.$digest();
+
+        BookingService.book(vm.pickupLocation, vm.destinationLocation)
+          .then(function (response) {
+            // success callback
+            $rootScope.bookingProc = false;
+            console.log(response);
+            return response
+          }, function (response) {
+            //error callback
+            console.log('Error: ', response)
+          }).then(function () {
+          OrderingService.finishCurrentOrder();
+        });
+      } else {
+        console.log("Form is not Valid")
+      }
+
     }
   }
 
