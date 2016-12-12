@@ -1,9 +1,10 @@
 <div ng-controller="OrderCtrl as vm">
 
-  <form>
+  <form name="orderForm" ng-submit="vm.submit(orderForm.$valid)" novalidate>
     <div class="form-group">
       <label for="pickupLocation">Pickup Location</label>
       <input type="text"
+             name="pickup"
              class="form-control"
              id="pickupLocation"
              required
@@ -13,22 +14,32 @@
              ng-model="vm.pickupAddress"
              component-restrictions="{country:'ee'}"
              on-place-changed="vm.pickupPlaceChanged()"/>
+      <div ng-show="orderForm.$submitted || orderForm.pickup.$touched">
+        <p ng-show="orderForm.pickup.$error.required">Enter Pickup Location</p>
+      </div>
+
     </div>
 
     <div class="form-group">
       <label for="destinationLocation">Destination Location</label>
       <input type="text"
+             name="destination"
              class="form-control"
              id="destinationLocation"
              placeholder="Enter destination location"
              size=80
+             required
              places-auto-complete
              ng-model="vm.destinationAddress"
              component-restrictions="{country:'ee'}"
              on-place-changed="vm.destinationPlaceChanged()"/>
     </div>
+    <div ng-show="orderForm.$submitted || orderForm.destination.$touched">
+      <p ng-show="orderForm.destination.$error.required">Enter Destination Location</p>
+    </div>
 
-    <input type="submit" class="btn btn-default" ng-click="vm.submit()" value="Request Taxi"/>
+    <button type="submit" class="btn btn-primary">Request Taxi</button>
+
   </form>
 
   <br>
@@ -53,6 +64,13 @@
       origin="{{vm.pickupLocation}}"
       destination="{{vm.destinationLocation}}">
     </directions>
+
+    <marker ng-repeat="driver in vm.drivers"
+            icon="{{vm.image}}"
+            shape="{{vm.shape}}"
+            title="{{driver[0]}}"
+            position="{{driver[1]}}, {{driver[2]}}"
+            z-index="{{driver[3]}}"></marker>
 
   </map>
 
