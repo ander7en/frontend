@@ -18,7 +18,7 @@ describe('Service: driver', function () {
     driver = _DriverService_;
     $httpBackend = _$httpBackend_;
     // backend definition common for all tests
-    authRequestHandler = $httpBackend.when('GET', remoteAddress + '/drivers?ltd=58.382382&lng=29.732440')
+    authRequestHandler = $httpBackend.when('GET', remoteAddress + '/drivers?lat=58.382382&lng=29.732440')
       .respond(200, example_response);
 
   }));
@@ -33,7 +33,7 @@ describe('Service: driver', function () {
   it('should send get to server', function() {
     var testSrcLocation = {latitude: '58.382382', longitude: '29.732440'};
     driver.loadDrivers(testSrcLocation);
-    $httpBackend.expectGET(remoteAddress + '?ltd=58.382382&lng=29.732440').respond(200, example_response);
+    $httpBackend.expectGET(remoteAddress + '?lat=58.382382&lng=29.732440').respond(200, example_response);
     $httpBackend.flush();
   });
 

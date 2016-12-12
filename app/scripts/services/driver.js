@@ -14,6 +14,6 @@ angular.module('frontendTaxiApp')
 function DriverService($http, ENV) {
   var driverServiceURL = ENV.apiEndpoint + '/drivers';
   this.loadDrivers = function (srcLocation) {
-    return $http.get(driverServiceURL, {params: {ltd: srcLocation.latitude, lng: srcLocation.longitude}});
+    return $http.get(driverServiceURL, {params: {lat: srcLocation.latitude, lng: srcLocation.longitude}});
   }
 }

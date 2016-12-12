@@ -31,7 +31,7 @@ describe('Service: BookingService', function () {
     var controller = createController();
     controller.pickupLocation = testSrcLocation;
     controller.destinationLocation = testTgtLocation;
-    controller.submit();
+    controller.submit(true);
     $httpBackend.expectPOST(remoteAddress).respond(201, '');
     $httpBackend.flush()
   });
