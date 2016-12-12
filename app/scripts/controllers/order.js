@@ -73,8 +73,8 @@
     function loadMarkers(drivers) {
       console.log(drivers);
       vm.image = {
-        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        size: [20, 32],
+        url: 'images/taxi-pin.png',
+        size: [32, 32],
         origin: [0,0],
         anchor: [0, 32]
       };
