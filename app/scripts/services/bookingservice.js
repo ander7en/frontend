@@ -61,5 +61,12 @@ function BookingService($http, $rootScope, ENV, localStorageService, PusherFacto
       $rootScope.$apply();
 
     });
+    channel.bind('error', function (data) {
+      NotificationService.addAlert({
+        type: 'danger',
+        msg: data.message
+      });
+      $rootScope.$apply();
+    });
   }
 }
