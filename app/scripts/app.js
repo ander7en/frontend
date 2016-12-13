@@ -15,7 +15,8 @@ angular
     'ui.bootstrap',
     'ngMap',
     'config',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'jtt_github'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

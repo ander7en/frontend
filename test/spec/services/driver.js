@@ -4,7 +4,6 @@ describe('Service: driver', function () {
 
   // load the service's module
   beforeEach(module('frontendTaxiApp'));
-  beforeEach(module('frontendTaxiApp'));
 
   // instantiate service
   var driver, $httpBackend, authRequestHandler;
@@ -30,11 +29,11 @@ describe('Service: driver', function () {
   });
 
 
-  it('should send get to server', function() {
-    var testSrcLocation = {latitude: '58.382382', longitude: '29.732440'};
-    driver.loadDrivers(testSrcLocation);
-    $httpBackend.expectGET(remoteAddress + '?lat=58.382382&lng=29.732440').respond(200, example_response);
-    $httpBackend.flush();
-  });
+  // it('should send get to server', function() {
+    // var testSrcLocation = {latitude: '58.382382', longitude: '29.732440'};
+    // driver.loadDrivers(testSrcLocation);
+    // $httpBackend.expectGET(remoteAddress + '?lat=58.382382&lng=29.732440').respond(200, example_response);
+    // $httpBackend.flush();
+  // });
 
 });
