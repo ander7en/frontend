@@ -54,9 +54,16 @@ function BookingService($http, $rootScope, ENV, localStorageService, PusherFacto
     });
     channel = pusher.subscribe(pusherUserId + '_channel');
     channel.bind('update', function (data) {
+      var msg;
+      if (data.carInfo == 0) {
+        msg = "You have reached your Destination, Payment: " + data.price + "$";
+      } else {
+        msg = 'Car with info: ' + data.carInfo + ' will pick you up in ' + data.arrivalTime;
+      }
+
       NotificationService.addAlert({
         type: 'success',
-        msg: 'Car with info: ' + data.carInfo + ' will pick you up in ' + data.arrivalTime
+        msg: msg
       });
       $rootScope.$apply();
 
