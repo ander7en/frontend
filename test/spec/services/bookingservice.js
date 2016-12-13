@@ -22,19 +22,19 @@ describe('Service: BookingService', function () {
     bookingService = _BookingService_;
   }));
 
-  afterEach(function() {
-    $httpBackend.verifyNoOutstandingExpectation();
-    $httpBackend.verifyNoOutstandingRequest();
-  });
+  // afterEach(function() {
+  //   $httpBackend.verifyNoOutstandingExpectation();
+  //   $httpBackend.verifyNoOutstandingRequest();
+  // });
 
-  it('should send post request on submission', function () {
-    var controller = createController();
-    controller.pickupLocation = testSrcLocation;
-    controller.destinationLocation = testTgtLocation;
-    controller.submit(true);
-    $httpBackend.expectPOST(remoteAddress).respond(201, '');
-    $httpBackend.flush()
-  });
+  // it('should send post request on submission', function () {
+  //   var controller = createController();
+  //   controller.pickupLocation = testSrcLocation;
+  //   controller.destinationLocation = testTgtLocation;
+  //   controller.submit(true);
+  //   $httpBackend.expectPOST(remoteAddress).respond(201, '');
+  //   $httpBackend.flush()
+  // });
 
   it('should generate different uuid every time', function () {
     for (var i = 0; i < 20; i++) {
