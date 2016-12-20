@@ -103,10 +103,8 @@
 
     function updateRouteInfo() {
       if (vm.pickupLocation && vm.destinationLocation) {
-        $timeout(function () {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
           vm.duration = vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text;
-        }, 300);
       }
     }
 
