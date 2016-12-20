@@ -44,12 +44,12 @@
 
   <br>
 
-  <div ng-show="vm.distance">
-    Distance:{{vm.distance}}
+  <div ng-show="vm.map.directionsRenderers[0].directions">
+    Distance:{{vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text}}
   </div>
 
-  <div ng-show="vm.duration">
-    Average time of travel: {{vm.duration}}
+  <div ng-show="vm.map.directionsRenderers[0].directions">
+    Average time of travel: {{vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text}}
   </div>
   <br>
 
