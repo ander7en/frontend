@@ -12,9 +12,10 @@
     .controller('OrderCtrl', OrderCtrl);
 
   /* @ngInject */
-  function OrderCtrl($rootScope, $scope, NgMap, $timeout, BookingService, localStorageService, OrderingService, DriverService) {
+  function OrderCtrl($rootScope, $scope, NgMap, BookingService, OrderingService, DriverService) {
 
     var vm = this;
+    var scope = $scope;
     // Data
     vm.map = undefined;
     vm.distance = undefined;
@@ -103,10 +104,8 @@
 
     function updateRouteInfo() {
       if (vm.pickupLocation && vm.destinationLocation) {
-        $timeout(function () {
           vm.distance = vm.map.directionsRenderers[0].directions.routes[0].legs[0].distance.text;
           vm.duration = vm.map.directionsRenderers[0].directions.routes[0].legs[0].duration.text;
-        }, 300);
       }
     }
 
@@ -115,6 +114,13 @@
       vm.destinationLocation = this.getPlace().geometry.location;
       OrderingService.changeDestination(vm.destinationLocation);
       vm.map.setCenter(vm.destinationLocation);
+      updateRouteInfo();
+    }
+
+    // Listener on Pickup location change
+    function pickupPlaceChanged() {
+      vm.pickupLocation = this.getPlace().geometry.location;
+      vm.map.setCenter(vm.pickupLocation);
       updateRouteInfo();
     }
 
@@ -131,12 +137,14 @@
               vm.destinationLocation = latlng;
               $scope.$apply();
               OrderingService.changeDestination(vm.destinationLocation);
+              // updateRouteInfo();
             } else {
               vm.pickupAddress = results[0].formatted_address;
               vm.pickupLocation = latlng;
               $scope.$apply();
               OrderingService.changePickup(vm.pickupLocation);
             }
+
           } else {
             element.text('Location not found');
           }
@@ -144,13 +152,6 @@
           element.text('Geocoder failed due to: ' + status);
         }
       });
-    }
-
-    // Listener on Pickup location change
-    function pickupPlaceChanged() {
-      vm.pickupLocation = this.getPlace().geometry.location;
-      vm.map.setCenter(vm.pickupLocation);
-      updateRouteInfo();
     }
 
     function submit(isValid) {
