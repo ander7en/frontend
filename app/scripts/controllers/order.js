@@ -32,7 +32,7 @@
     vm.pickupPlaceChanged = pickupPlaceChanged;
     vm.updateRouteInfo = updateRouteInfo;
     vm.submit = submit;
-    vm.loadMarkers = loadMarkers;
+    // vm.loadMarkers = loadMarkers;
     //////////
     init();
 
@@ -47,11 +47,11 @@
           if (vm.destinationLocation != "noAddress") {
             locationToPlace(vm.destinationLocation, true);
           }
-          loadDrivers(vm.pickupLocation);
+          // loadDrivers(vm.pickupLocation);
         } else {
           NgMap.getGeoLocation().then(function (location) {
             locationToPlace(location);
-            loadDrivers(location);
+            // loadDrivers(location);
           });
         }
       });
@@ -62,45 +62,45 @@
       // }
     }
 
-    function loadDrivers(l) {
-      DriverService.loadDrivers({latitude: l.lat(), longitude: l.lng()})
-        .then(function (response) {
-          // success callback
-          console.log(response);
-          loadMarkers(response.data['drivers']);
-        }, function (response) {
-          //error callback
-          console.log('Error: ', response)
-        });
-    }
-
-    function loadMarkers(drivers) {
-      console.log(drivers);
-      vm.image = {
-        url: 'images/taxi-pin.png',
-        size: [32, 32],
-        origin: [0,0],
-        anchor: [0, 32]
-      };
-      vm.shape = {
-        coords: [1, 1, 1, 20, 18, 20, 18 , 1],
-        type: 'poly'
-      };
-
-      var driver_pis = [];
-      var i = 0;
-      var d;
-      for(d in drivers) {
-        var dr = drivers[d];
-        driver_pis.push([dr['car_info'], dr['ltd'], dr['lng'], drivers.length - i]);
-        i++;
-      }
-
-      console.log(driver_pis);
-
-      vm.drivers = driver_pis;
-
-    }
+    // function loadDrivers(l) {
+    //   DriverService.loadDrivers({latitude: l.lat(), longitude: l.lng()})
+    //     .then(function (response) {
+    //       // success callback
+    //       console.log(response);
+    //       loadMarkers(response.data['drivers']);
+    //     }, function (response) {
+    //       //error callback
+    //       console.log('Error: ', response)
+    //     });
+    // }
+    //
+    // function loadMarkers(drivers) {
+    //   console.log(drivers);
+    //   vm.image = {
+    //     url: 'images/taxi-pin.png',
+    //     size: [32, 32],
+    //     origin: [0,0],
+    //     anchor: [0, 32]
+    //   };
+    //   vm.shape = {
+    //     coords: [1, 1, 1, 20, 18, 20, 18 , 1],
+    //     type: 'poly'
+    //   };
+    //
+    //   var driver_pis = [];
+    //   var i = 0;
+    //   var d;
+    //   for(d in drivers) {
+    //     var dr = drivers[d];
+    //     driver_pis.push([dr['car_info'], dr['ltd'], dr['lng'], drivers.length - i]);
+    //     i++;
+    //   }
+    //
+    //   console.log(driver_pis);
+    //
+    //   vm.drivers = driver_pis;
+    //
+    // }
 
     function updateRouteInfo() {
       if (vm.pickupLocation && vm.destinationLocation) {
